@@ -1,8 +1,9 @@
 var FinalMelodyOutput = [];
 
 firstNote();
-firstHalf(11);
-secondHalf(11);
+firstHalf(finalRhythmOutput.length);
+secondHalf(finalRhythmOutput.length);
+console.log("melody:" + FinalMelodyOutput);
 function firstNote() {
   var firstNoteSlice = [];
   for (key in melody) {
@@ -76,5 +77,3 @@ function secondHalf(notes) {
   }
   FinalMelodyOutput = FinalMelodyOutput.concat(noteSlice);
 }
-
-console.log(FinalMelodyOutput);
