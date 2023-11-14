@@ -47,11 +47,9 @@
 // mainRhythmLogic("the La zy Dog Jumps o Ver the Big Brown Dog");
 
 //This is to convert the syllables into binary form, capital will be 1, non-capital will be 0
-var binaryLine = [];
-var finalRhythmOutput = [];
+
 
 function mainRhythmLogic() {
-  convertToBinary("in the La zy Dog Jumps o Ver the Big Brown Dog");
   while (binaryLine.length > 0) {
     if (binaryLine[0] == 0) {
       forZeros();
@@ -60,24 +58,10 @@ function mainRhythmLogic() {
     }
   }
 }
-mainRhythmLogic();
-console.log("rhythm:" + finalRhythmOutput);
 
-function convertToBinary(line) {
-  var lineIntoArray = line.split(" ");
-  for (let word in lineIntoArray) {
-    if (capital(lineIntoArray[word])) {
-      binaryLine.push(1);
-    } else {
-      binaryLine.push(0);
-    }
-  }
-}
-function capital(word) {
-  if (word.charAt(0) == word.charAt(0).toUpperCase()) {
-    return true;
-  }
-}
+
+
+
 
 function forZeros() {
   //check for 0. if one 0, it will be 3 or 6. if two 0, it will be 2,3 or 5,6.

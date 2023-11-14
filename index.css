@@ -1,0 +1,42 @@
+body {
+    font-size: 2rem;
+}
+.instructions{
+    font-size: 1rem;
+}
+#inputText{
+    width:60%
+}
+#output {
+    display: flex;
+    flex-direction: column;
+}
+
+#melodyContainer,
+#syllableContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+.note,
+.syllable {
+  
+    height: 2rem;
+    width: 3rem;
+    margin: 0.2em; /* Add margin for spacing between items */
+}
+
+/* .note{
+  border: solid red 1px;
+}
+
+.syllable{
+    border: solid green 1px;
+} */
+
+.separator {
+    height: 1rem; /* Adjust the height as needed */
+    width: 100%; /* Make it span the full width of the container */
+    margin-bottom: 1rem; /* Add margin at the bottom for spacing */
+}

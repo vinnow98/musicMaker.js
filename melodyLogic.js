@@ -1,25 +1,28 @@
-var FinalMelodyOutput = [];
+function mainMelodyLogic(noOfNotes) {
+  var firstHalfNotes = firstHalf(noOfNotes);
+  var secondHalfNotes = secondHalf(noOfNotes);
+  FinalMelodyOutput = firstHalfNotes.concat(secondHalfNotes);
+}
 
-firstNote();
-firstHalf(finalRhythmOutput.length);
-secondHalf(finalRhythmOutput.length);
-console.log("melody:" + FinalMelodyOutput);
 function firstNote() {
   var firstNoteSlice = [];
   for (key in melody) {
     firstNoteSlice.push(melody[key][0]);
   }
   var randomIndex = Math.floor(Math.random() * firstNoteSlice.length);
-  var note = firstNoteSlice[randomIndex];
-  FinalMelodyOutput.push(note);
+
+  return firstNoteSlice[randomIndex];
 }
 
 function firstHalf(notes) {
+  var firstHalfSlice = [];
+  firstHalfSlice.push(firstNote());
+
   //notes-2 to minus off the first note and last note. Divide by two to get the first half.
   for (let i = 0; i < Math.ceil((notes - 2) / 2); i++) {
-    //references the last note in the final melody to make the next choice.
-    var lastNote = FinalMelodyOutput[FinalMelodyOutput.length - 1];
-    //the possible options baed on the last note.
+    //references the last note to make the next choice.
+    var lastNote = firstHalfSlice[firstHalfSlice.length - 1];
+    //the possible options based on the last note.
     var possibleNoteOptions = [];
 
     for (key in melody) {
@@ -34,9 +37,9 @@ function firstHalf(notes) {
       }
     }
     var randomIndex = Math.floor(Math.random() * possibleNoteOptions.length);
-    var note = possibleNoteOptions[randomIndex];
-    FinalMelodyOutput.push(note);
+    firstHalfSlice.push(possibleNoteOptions[randomIndex]);
   }
+  return firstHalfSlice;
 }
 
 function endNote() {
@@ -51,7 +54,6 @@ function endNote() {
 }
 
 function secondHalf(notes) {
-  //   var l = lastNote();
   var noteSlice = [endNote()];
   //notes-2 to minus off the first note and last note. Divide by two to get the second half.
   for (let i = 0; i < Math.floor((notes - 2) / 2); i++) {
@@ -75,5 +77,5 @@ function secondHalf(notes) {
     var note = possibleNoteOptions[randomIndex];
     noteSlice.unshift(note);
   }
-  FinalMelodyOutput = FinalMelodyOutput.concat(noteSlice);
+  return noteSlice;
 }
