@@ -1,0 +1,1 @@
+body{font-size:2rem}.instructions{font-size:1rem}#inputText{width:60%}#output{display:flex;flex-direction:column}#melodyContainer,#syllableContainer{display:flex;flex-wrap:wrap}.note,.syllable{height:2rem;width:3rem;margin:.2em}.separator{height:1rem;width:100%;margin-bottom:1rem}
