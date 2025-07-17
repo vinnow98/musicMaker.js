@@ -1,30 +1,23 @@
-import "./rawMusicData/rawMusicData"
-import {mainMelodyLogic} from "./melodyLogic.js";
-import {mainRhythmLogic} from "./rhythmLogic.js";
+import "./rawMusicData/rawMusicData";
 import "./assets/css/index.css";
-import {splitToSyllables} from "./splitToSyllables.js"
+import { splitToSyllables } from "./splitToSyllables.js";
 
-
-var finalRhythmOutput = [];
 var finalOutput = [];
 var error = document.getElementById("errorMessage");
 
-document.addEventListener("DOMContentLoaded",()=>{
-  document.querySelector(".start-button").addEventListener("click",start)
-})
-
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelector(".start-button").addEventListener("click", start);
+});
 
 async function start() {
   error.textContent = "";
-  // binaryLine = [];
-  finalRhythmOutput = [];
   finalOutput = [];
 
-   var inputValue = document.getElementById("inputText").value;
-    const splitWords = await splitToSyllables(inputValue);
+  var inputValue = document.getElementById("inputText").value;
+  const splitWords = await splitToSyllables(inputValue);
 
-     console.log(splitWords);
-     console.log(splitWords.length);
+  console.log(splitWords);
+  console.log(splitWords.length);
   //   lyrics = "The La zy dog Jump O ver the Quick Brown Fox";
   //   lyrics = "The Lazy dog Jump Over the Quick Brown Fox";
   // convertToBinary(lyrics);
@@ -34,14 +27,14 @@ async function start() {
   // console.log(splitWords)
   // console.log(splitWords.length)
 
-  mainMelodyLogic(splitWords.length);
-  mainRhythmLogic();
-  console.log("Rhythm:" + finalRhythmOutput);
-  console.log("Melody:" + FinalMelodyOutput);
-  combineMelodyAndRhythm();
-  finalOutput = finalOutput.join("");
-  console.log("final:" + finalOutput);
-  convertBacktoHTML();
+  const melodyOutput = mainMelodyLogic(splitWords.length);
+  const rhythmOutput = mainRhythmLogic(splitWords);
+  // console.log("Rhythm:" + rhythmOutput);
+  // console.log("Melody:" + melodyOutput);
+  // combineMelodyAndRhythm();
+  // finalOutput = finalOutput.join("");
+  // console.log("final:" + finalOutput);
+  // convertBacktoHTML();
 }
 
 function convertBacktoHTML() {
@@ -100,44 +93,3 @@ function combineMelodyAndRhythm() {
     }
   }
 }
-
-
-// const vf = new Vex.Flow.Factory({
-//   renderer: {
-//     elementId: "boo",
-//     width: 1000,
-//     height: 400,
-//     background: "#fff",
-//   },
-// });
-
-// const score = vf.EasyScore();
-// const system = vf.System({ x: 10, y: 40, width: 400 }); // 👈 enough room
-
-// // Measure 1
-// system
-//   .addStave({
-//     voices: [
-//       score.voice(
-//         score
-//           .notes("C#5/q, B4, B4")
-//           .concat(score.beam(score.notes("A4/8, G#4/8", { stem: "down" })))
-//       ),
-//     ],
-//   })
-//   .addClef("treble")
-//   .addTimeSignature("6/8");
-
-// const system2 = vf.System({ x: 410, y: 40, width: 400 });
-// // Measure 2 — goes to the right
-// system2.addStave({
-//   voices: [
-//     score.voice(
-//       score
-//         .notes("C5/q, B4, A4")
-//         .concat(score.beam(score.notes("G#4/8, F#4/8", { stem: "down" })))
-//     ),
-//   ],
-// });
-
-// vf.draw();

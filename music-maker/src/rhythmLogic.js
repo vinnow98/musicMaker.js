@@ -50,82 +50,94 @@
 // import "./rawMusicData/rawMusicData";
 // import "./melodyLogic.js";
 // import "./assets/css/index.css";
+
+//maybe look into prosody.js? which syllable to emphasiese.
 import { removeStopwords} from "stopword";
 
 
 
-export function mainRhythmLogic(text) {
+export function mainRhythmLogic(syllableArray) {
+  const customFilter = removeStopwords(syllableArray, ["ing", "er"]);
 
-  const oldString = "go ing to town".split(" ");
-  console.log(oldString);
-  const newString = removeStopwords(oldString);
+  const importantSyllables = removeStopwords(customFilter);
 
-  const customFilter = removeStopwords(newString, ["ing"]);
-  console.log(customFilter);
+  console.log(importantSyllables);
+  const binaryLine = [];
+  for (let i = 0; i < syllableArray.length; i++) {
+    const syllable = syllableArray[i];
+    // const importantSyllable = importantSyllables[i]
+    const isImportant = importantSyllables.includes(syllable);
 
-  while (binaryLine.length > 0) {
-    if (binaryLine[0] == 0) {
-      forZeros();
-    } else if ((binaryLine[0] = 1)) {
-      forOnes();
-    }
+    binaryLine.push(isImportant ? 1 : 0);
   }
+  console.log(binaryLine);
+  const normalizedInput = normalise(binaryLine);
+  console.log(normalizedInput);
+  const finalRhythmOutput = assignPositions(normalizedInput);
+  console.log(finalRhythmOutput);
+  return finalRhythmOutput;
 }
 
+function normalise(binaryLine) {
+  let i = 0;
 
-
-
-
-function forZeros() {
-  //check for 0. if one 0, it will be 3 or 6. if two 0, it will be 2,3 or 5,6.
-  //check for 1. if previous is 3, it has to be 4. if previous is 6, it has to be 1. remaining 1s will be randomly assigned 1 or 4.
-  // the same numbers (1s or 0s) will go in here temporarily.
-  sameNumSlice = [];
-  for (var i = 0; i < binaryLine.length; i++) {
-    if (binaryLine[0] == 0) {
-      binaryLine.splice(0, 1);
-      sameNumSlice.push(0);
-    }
-  }
-  if (sameNumSlice.length == 1) {
-    var options = [3, 6];
-    finalRhythmOutput.push(options[Math.floor(Math.random() * options.length)]);
-    sameNumSlice = [];
-  } else if (sameNumSlice.length == 2) {
-    var options = [
-      [2, 3],
-      [5, 6],
-    ];
-    finalRhythmOutput = finalRhythmOutput.concat(
-      options[Math.floor(Math.random() * options.length)]
-    );
-    sameNumSlice = [];
-  }
-}
-
-function forOnes() {
-  //check for 0. if one 0, it will be 3 or 6. if two 0, it will be 2,3 or 5,6.
-  //check for 1. if previous is 3, it has to be 4. if previoous is 6, it has to be 1. remaining 1s will be randomly assigned 1 or 4.
-  // the same numbers (1s or 0s) will go in here temporarily.
-  if (finalRhythmOutput[finalRhythmOutput.length - 1] == 3) {
-    finalRhythmOutput.push(4);
-    binaryLine.shift();
-  } else if (finalRhythmOutput[finalRhythmOutput.length - 1] == 6) {
-    finalRhythmOutput.push(1);
-    binaryLine.shift();
-  }
-  sameNumSlice = [];
-  for (var i = 0; i < binaryLine.length; i++) {
-    if (binaryLine[0] == 1) {
-      binaryLine.splice(0, 1);
-      sameNumSlice.push(1);
+  while (i < binaryLine.length) {
+    if (
+      binaryLine[i] === 0 &&
+      binaryLine[i + 1] === 0 &&
+      binaryLine[i + 2] === 0
+    ) {
+      const flipIndex = i + Math.floor(Math.random() * 3);
+      binaryLine[flipIndex] = 1;
+      i += 3;
     } else {
-      break;
+      i++;
     }
   }
-  for (var i = 0; i < sameNumSlice.length; i++) {
-    var options = [1, 1, 4];
-    finalRhythmOutput.push(options[Math.floor(Math.random() * options.length)]);
+
+  return binaryLine;
+}
+
+function assignPositions(binaryLine) {
+  const positions = [];
+  let i = 0;
+
+  while (i < binaryLine.length) {
+    if (binaryLine[i] === 1) {
+      const prev = positions[positions.length - 1];
+
+      if (prev === 3) {
+        positions.push(4);
+      } else if (prev === 6) {
+        positions.push(1);
+      } else {
+        positions.push(Math.random() < 0.5 ? 1 : 4);
+      }
+
+      i++;
+    } else {
+      // Count how many zeros in a row
+      let zeroCount = 1;
+      while (binaryLine[i + zeroCount] === 0) {
+        zeroCount++;
+      }
+
+      if (zeroCount === 1) {
+        positions.push(Math.random() < 0.5 ? 3 : 6);
+        i++;
+      } else if (zeroCount === 2) {
+        const pair = Math.random() < 0.5 ? [2, 3] : [5, 6];
+        positions.push(...pair);
+        i += 2;
+      } else {
+        // If more than 2 zeros (shouldn’t happen if fixed), fill with 3s
+        for (let j = 0; j < zeroCount; j++) {
+          positions.push(3);
+        }
+        i += zeroCount;
+      }
+    }
   }
-  sameNumSlice = [];
+
+  return positions;
 }
