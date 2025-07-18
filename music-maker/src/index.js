@@ -1,6 +1,9 @@
 import "./rawMusicData/rawMusicData";
 import "./assets/css/index.css";
 import { splitToSyllables } from "./splitToSyllables.js";
+import { mainMelodyLogic } from "./melodyLogic.js";
+import { mainRhythmLogic } from "./rhythmLogic.js";
+import { vexify } from "./vex.js";
 
 var finalOutput = [];
 var error = document.getElementById("errorMessage");
@@ -16,8 +19,10 @@ async function start() {
   var inputValue = document.getElementById("inputText").value;
   const splitWords = await splitToSyllables(inputValue);
 
-  console.log(splitWords);
-  console.log(splitWords.length);
+  const melodyOutput = mainMelodyLogic(splitWords.length);
+  const rhythmOutput = mainRhythmLogic(splitWords);
+  vexify(melodyOutput, rhythmOutput, splitWords);
+
   //   lyrics = "The La zy dog Jump O ver the Quick Brown Fox";
   //   lyrics = "The Lazy dog Jump Over the Quick Brown Fox";
   // convertToBinary(lyrics);
@@ -27,8 +32,6 @@ async function start() {
   // console.log(splitWords)
   // console.log(splitWords.length)
 
-  const melodyOutput = mainMelodyLogic(splitWords.length);
-  const rhythmOutput = mainRhythmLogic(splitWords);
   // console.log("Rhythm:" + rhythmOutput);
   // console.log("Melody:" + melodyOutput);
   // combineMelodyAndRhythm();

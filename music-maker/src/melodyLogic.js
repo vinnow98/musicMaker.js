@@ -5,7 +5,6 @@ export function mainMelodyLogic(noOfNotes) {
   var firstHalfNotes = firstHalf(noOfNotes);
   var secondHalfNotes = secondHalf(noOfNotes);
   var finalMelodyOutput = firstHalfNotes.concat(secondHalfNotes);
-  console.log(finalMelodyOutput)
   return finalMelodyOutput
 }
 

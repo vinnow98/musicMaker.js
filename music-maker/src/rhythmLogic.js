@@ -61,7 +61,6 @@ export function mainRhythmLogic(syllableArray) {
 
   const importantSyllables = removeStopwords(customFilter);
 
-  console.log(importantSyllables);
   const binaryLine = [];
   for (let i = 0; i < syllableArray.length; i++) {
     const syllable = syllableArray[i];
@@ -70,11 +69,11 @@ export function mainRhythmLogic(syllableArray) {
 
     binaryLine.push(isImportant ? 1 : 0);
   }
-  console.log(binaryLine);
+
   const normalizedInput = normalise(binaryLine);
-  console.log(normalizedInput);
+
   const finalRhythmOutput = assignPositions(normalizedInput);
-  console.log(finalRhythmOutput);
+
   return finalRhythmOutput;
 }
 
