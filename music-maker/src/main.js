@@ -5,4 +5,3 @@ import "./index.js"
 import "./melodyLogic.js";
 import "./rhythmLogic.js"
 import "./vex.js";
-// import './vexSetup.js'; ← later when

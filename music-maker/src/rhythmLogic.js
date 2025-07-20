@@ -64,7 +64,6 @@ export function mainRhythmLogic(syllableArray) {
   const binaryLine = [];
   for (let i = 0; i < syllableArray.length; i++) {
     const syllable = syllableArray[i];
-    // const importantSyllable = importantSyllables[i]
     const isImportant = importantSyllables.includes(syllable);
 
     binaryLine.push(isImportant ? 1 : 0);
